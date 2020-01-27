@@ -2,34 +2,87 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {MaterialCommunityIcons as Icon} from 'react-native-vector-icons'
 
-export default function App() {
+export default class App extends React.Component {
+
+  constructor (props){
+    super(props);
+
+    this.state={
+      gameState:[
+        [0,0,0],
+        [0,0,0],
+        [0,0,0]
+      ],
+      currentPlayer: 1,
+    }
+  }
+
+  componentDidMount(){
+    this.initializeGame();
+  }
+
+  initializeGame=()=> {
+    this.setState({gameState:
+      [
+        [0,0,0],
+        [0,0,0],
+        [0,0,0]
+      ]
+    });
+  }
+
+  renderIcon =(row, col)=> {
+    var value= this.state.gameState[row][col];
+    switch(value){
+      case 1: <Icon name ="close" style={styles.tileX}/>;
+      case -1:  <Icon name="circle-outline" style={styles.tileO}/>;
+      default:return <View/>;
+    }
+  }
+
+  render(){
   return (
     <View style={styles.container}>
 
       <View style={{flexDirection:"row"}}>
         <View style={[styles.tile, {borderLeftWidth:0, borderTopWidth:0}]}>
-          <Icon name ="close" style={styles.tileX}/>
+          {this.renderIcon (0,0)}
         </View>
         <View style={[styles.tile, {borderTopWidth:0}]}>
-        <Icon name="circle-outline" style={styles.tileO}/>
+          {this.renderIcon (0,1)}
         </View>
-        <View style={[styles.tile, {borderRightWidth:0, borderTopWidth:0}]}/>
+        <View style={[styles.tile, {borderRightWidth:0, borderTopWidth:0}]}>
+          {this.renderIcon (0,2)}
+        </View>  
       </View>
 
       <View style={{flexDirection:"row"}}>
-        <View style={[styles.tile, {borderLeftWidth:0}]}/>
-        <View style={[styles.tile, {}]}/>
-        <View style={[styles.tile, {borderRightWidth:0}]}/>
+        <View style={[styles.tile, {borderLeftWidth:0}]}>
+          {this.renderIcon (1,0)}
+        </View> 
+        <View style={[styles.tile, {}]}>
+          {this.renderIcon (1,1)}
+        </View> 
+        <View style={[styles.tile, {borderRightWidth:0}]}>
+          {this.renderIcon (1,2)}
+        </View> 
       </View>
 
       <View style={{flexDirection:"row"}}>
-        <View style={[styles.tile, {borderBottomWidth:0, borderLeftWidth:0}]}/>
-        <View style={[styles.tile, {borderBottomWidth:0}]}/>
-        <View style={[styles.tile, {borderBottomWidth:0, borderRightWidth:0}]}/>
+        <View style={[styles.tile, {borderBottomWidth:0, borderLeftWidth:0}]}>
+          {this.renderIcon (2,0)}
+        </View> 
+        <View style={[styles.tile, {borderBottomWidth:0}]}>
+          {this.renderIcon (2,1)}
+        </View> 
+        <View style={[styles.tile, {borderBottomWidth:0, borderRightWidth:0}]}>
+          {this.renderIcon (2,2)}
+        </View> 
       </View>
 
     </View>
   );
+}
 }
 
 const styles = StyleSheet.create({
@@ -40,22 +93,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tile:{
-    borderWidth:1,
+    borderWidth:4,
     width:100,
     height:100,
   },
   tileX:{
     color: "red",
     fontSize:60,
-    flex:1,
-    alignItems:"center",
-    justifyContent:"center",
+  
   },
   tileO:{
     color:"green",
     fontSize:60,
-    flex:1,
-    alignItems:"center",
-    justifyContent:"center",
+
   }
 });
