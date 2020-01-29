@@ -56,7 +56,15 @@ export default class App extends React.Component {
       if (sum == 3) {return 1;}
       else if ( sum == -3){return -1;}
     
-     sum = arr[2][0] + arr[1][1] + arr[2][2];
+     sum = arr[2][2] + arr[1][1] + arr[0][0];
+      if (sum == 3) {return 1;}
+      else if ( sum == -3){return -1;}
+      
+      sum = arr[0][2] + arr[1][1] + arr[2][0];
+      if (sum == 3) {return 1;}
+      else if ( sum == -3){return -1;}
+
+      sum = arr[2][0] + arr[1][1] + arr[0][2];
       if (sum == 3) {return 1;}
       else if ( sum == -3){return -1;}
     
@@ -84,10 +92,10 @@ export default class App extends React.Component {
    //chequeando ganador
     var winner = this.getWinner();
     if (winner == 1){
-      Alert.alert("El jugador X a ganado");
+      Alert.alert("El jugador ganador es caballlo");
       this.initializeGame();
     }else if (winner == -1){
-      Alert.alert("El Jugador O a ganado");
+      Alert.alert("El Jugador ganador es la torre");
       this.initializeGame();
     }
 
@@ -100,8 +108,8 @@ export default class App extends React.Component {
   renderIcon =(row, col)=> {
     var value= this.state.gameState[row][col];
     switch(value){
-      case 1:  return <Icon name ="close" style={styles.tileX}/>;
-      case -1: return <Icon name="circle-outline" style={styles.tileO}/>;
+      case 1:  return <Icon name ="chess-knight" style={styles.tileX}/>;
+      case -1: return <Icon name="chess-rook" style={styles.tileO}/>;
       default: return <View/>;
     }
   }
@@ -172,6 +180,6 @@ const styles = StyleSheet.create({
   },
   tileO:{
     color:"green",
-    fontSize:70,
+    fontSize:75,
   }
 });
