@@ -1,13 +1,17 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert, Button} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert,Button} from 'react-native';
 import {MaterialCommunityIcons as Icon} from 'react-native-vector-icons'
 
-export default class App extends React.Component {
 
+
+export default class App extends React.Component {
+  
   constructor (props){
     super(props);
 
     this.state={
+      titleText: "Tic Tac Toe",
+      bodyText: "♗♖?",
       gameState:[
         [0,0,0],
         [0,0,0],
@@ -73,7 +77,7 @@ export default class App extends React.Component {
   }
   
   onTilePress=(row, col)=>{
-   //no permita que los azulejos cambien
+   //no permite que los azulejos cambien
    var value = this.state.gameState[row][col];
    if (value !=0){return; }
 
@@ -92,10 +96,24 @@ export default class App extends React.Component {
    //chequeando ganador
     var winner = this.getWinner();
     if (winner == 1){
-      Alert.alert("El jugador ganador es caballlo");
+      Alert.alert(
+        '♗',
+        'El ganador es el Alfil',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        {cancelable: false},
+      );
       this.initializeGame();
     }else if (winner == -1){
-      Alert.alert("El Jugador ganador es la torre");
+      Alert.alert(
+       '♖',
+       'El ganador es la Torre',
+       [
+         {text: 'OK', onPress: () => console.log('OK Pressed')},
+       ],
+       {cancelable: false},
+     );
       this.initializeGame();
     }
 
@@ -108,7 +126,7 @@ export default class App extends React.Component {
   renderIcon =(row, col)=> {
     var value= this.state.gameState[row][col];
     switch(value){
-      case 1:  return <Icon name ="chess-knight" style={styles.tileX}/>;
+      case 1:  return <Icon name ="chess-pawn" style={styles.tileX}/>;
       case -1: return <Icon name="chess-rook" style={styles.tileO}/>;
       default: return <View/>;
     }
@@ -117,7 +135,13 @@ export default class App extends React.Component {
   render(){
   return (
     <View style={styles.container}>
-
+      <Text style={styles.titleText}>
+        {this.state.titleText}
+      </Text>
+      <Text style={styles.bodyText}>
+        {this.state.bodyText}{'\n'}{'\n'}{'\n'}
+      </Text>
+      
       <View style={{flexDirection:"row", alignItems:"center", justifyContent:"center"}}>
         <TouchableOpacity onPress={()=>this.onTilePress(0,0)} style={[styles.tile, {borderLeftWidth:0, borderTopWidth:0}]}>
           {this.renderIcon(0,0)}
@@ -154,8 +178,7 @@ export default class App extends React.Component {
         </TouchableOpacity> 
       </View>
 
-      <View style= {{ paddingTop:50}}/> 
-      <Button title="Jugar" onPress ={this.onNewGamePress}/>
+      <Button style={styles.button} title="Jugar" onPress ={this.onNewGamePress}/>
 
     </View>
   );
@@ -170,16 +193,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tile:{
-    borderWidth:10,
-    width:100,
-    height:100,
+    borderWidth:4,
+    width:90,
+    height:90,
+    alignItems: 'center',
+    justifyContent: 'center',
+    color:"#000066",
   },
   tileX:{
-    color: "red",
-    fontSize:75,
+    color: "#0099FF",
+    fontSize:50,
   },
   tileO:{
-    color:"green",
-    fontSize:75,
+    color:"#FF6666",
+    fontSize:50,
+  },
+  button:{
+    color:"red",
+  },
+  titleText:{
+    color:"#000066",
+    fontSize:40,
+  },
+  bodyText:{
+    color:"#000066",
+    fontSize:20,
   }
 });
