@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert,Button} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert, TouchableHighlight,} from 'react-native';
 import {MaterialCommunityIcons as Icon} from 'react-native-vector-icons'
-
 
 
 export default class App extends React.Component {
@@ -11,7 +10,7 @@ export default class App extends React.Component {
 
     this.state={
       titleText: "Tic Tac Toe",
-      bodyText: "♗♖?",
+      bodyText: "¿Quien es el ganador ♖ ó ♗?",
       gameState:[
         [0,0,0],
         [0,0,0],
@@ -126,8 +125,8 @@ export default class App extends React.Component {
   renderIcon =(row, col)=> {
     var value= this.state.gameState[row][col];
     switch(value){
-      case 1:  return <Icon name ="chess-pawn" style={styles.tileX}/>;
-      case -1: return <Icon name="chess-rook" style={styles.tileO}/>;
+      case 1:  return <Icon name ="chess-pawn" style={styles.tileBishop}/>;
+      case -1: return <Icon name="chess-rook" style={styles.tileTower}/>;
       default: return <View/>;
     }
   }
@@ -177,9 +176,11 @@ export default class App extends React.Component {
           {this.renderIcon(2,2)}
         </TouchableOpacity> 
       </View>
-
-      <Button style={styles.button} title="Jugar" onPress ={this.onNewGamePress}/>
-
+      <View style={{paddingTop:50}}/>
+      <TouchableHighlight onPress={(this.onNewGamePress.bind(this))} style={styles.button}>
+        <Text style={styles.textButton}>Juego Nuevo</Text> 
+      </TouchableHighlight>
+     
     </View>
   );
 }
@@ -200,16 +201,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color:"#000066",
   },
-  tileX:{
-    color: "#0099FF",
+  tileBishop:{
+    color: "#003399",
     fontSize:50,
   },
-  tileO:{
+  tileTower:{
+    color:"#cc0000",
+    fontSize:50,
+  },
+  playGame:{
     color:"#FF6666",
     fontSize:50,
-  },
-  button:{
-    color:"red",
   },
   titleText:{
     color:"#000066",
@@ -218,5 +220,22 @@ const styles = StyleSheet.create({
   bodyText:{
     color:"#000066",
     fontSize:20,
+  },
+  button:{
+    width:150,
+    height:40,
+    backgroundColor:"#000066",
+    alignItems: "center",
+    justifyContent:"center",
+    marginTop:20,
+    marginBottom:50,
+    borderRadius:5, 
+    borderWidth:1,
+  },
+  textButton:{
+    color: "#fff",
+    fontSize:20,
+
   }
+
 });
